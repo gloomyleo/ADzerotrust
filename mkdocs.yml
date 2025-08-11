@@ -1,0 +1,24 @@
+site_name: AD Zero Trust Assessor
+site_url: https://gloomyleo.github.io/zerotrust/
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.sections
+    - content.code.copy
+    - toc.integrate
+nav:
+  - Home: index.md
+  - Usage: usage.md
+  - Checks: checks.md
+  - FAQ: faq.md
+  - Screenshots: screenshots.md
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+plugins:
+  - search
+extra_css:
+  - styles/extra.css

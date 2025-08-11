@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AD Zero Trust Assessor</title>
+  <link rel="icon" href="logo.png"/>
+  <style>
+    :root {
+      --brand:#0f172a;      /* slate-900 */
+      --accent:#2563eb;     /* blue-600 */
+      --muted:#475569;      /* slate-600 */
+      --bg:#f8fafc;         /* slate-50 */
+      --card:#ffffff;
+      --ring:#dbeafe;       /* blue-100 */
+    }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; background: var(--bg); color:#0b1220; }
+    header { background: linear-gradient(90deg, var(--brand), #1e293b); color:#fff; padding: 28px 40px; display:flex; align-items:center; gap:16px; }
+    header img { width:42px; height:42px; border-radius:10px; }
+    main { padding: 30px 40px; max-width: 980px; margin:auto; }
+    h1 { margin:0 0 6px 0; font-size: 24px; }
+    .muted { color: var(--muted); }
+    .card { background: var(--card); border:1px solid #e5e7eb; border-radius:14px; padding:20px; margin-bottom:16px; box-shadow:0 2px 10px rgba(2,6,23,.06); }
+    button { padding:10px 16px; border-radius:10px; border:1px solid var(--accent); background: var(--accent); color:#fff; cursor:pointer; }
+    button:hover { filter: brightness(1.05); }
+    code { background:#f1f5f9; padding:2px 6px; border-radius:6px; }
+    .status { font-weight:600; }
+    .user { margin-left:auto; font-size:14px; opacity:.9 }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="logo"/>
+    <div>
+      <h1>AD Zero Trust Assessor</h1>
+      <div class="muted">Run checks, watch progress, and download your executive PDF report.</div>
+    </div>
+    <div class="user" id="user"> </div>
+  </header>
+  <main>
+    <div class="card">
+      <h3>1) Run assessment</h3>
+      <button id="runBtn">Start Run</button>
+      <span id="runMsg"></span>
+    </div>
+
+    <div class="card">
+      <h3>2) Job status</h3>
+      <div>Job ID: <code id="jobId">—</code></div>
+      <div class="status" id="jobState">—</div>
+    </div>
+
+    <div class="card">
+      <h3>3) Report</h3>
+      <a id="dl" href="/report/latest">Download executive_summary.pdf</a>
+    </div>
+  </main>
+
+<script>
+let jobId = null;
+const runBtn = document.getElementById('runBtn');
+const msg = document.getElementById('runMsg');
+const jobIdEl = document.getElementById('jobId');
+const jobState = document.getElementById('jobState');
+const userEl = document.getElementById('user');
+
+// Try to surface Windows Auth user if proxied via header (dev convenience)
+const candidateHeaders = ['X-Remote-User','X-Authenticated-User','Remote-User'];
+fetch('/healthz').then(r => {
+  // Not accessible to read headers, but we can display hint for admins
+  userEl.textContent = 'If Windows Auth is enabled, the reverse proxy should set REMOTE_USER.';
+}).catch(()=>{});
+
+async function poll() {
+  if (!jobId) return;
+  const r = await fetch(`/jobs/${jobId}`);
+  const j = await r.json();
+  jobState.textContent = j.state.toUpperCase();
+  if (j.state === 'completed' || j.state === 'error') return;
+  setTimeout(poll, 1200);
+}
+runBtn.onclick = async () => {
+  msg.textContent = ' starting...';
+  const r = await fetch('/run_checks', { method: 'POST', headers: {'Content-Type':'application/json'}, body: '{}' });
+  const j = await r.json();
+  jobId = j.job_id;
+  jobIdEl.textContent = jobId;
+  jobState.textContent = 'QUEUED';
+  msg.textContent = ' job started.';
+  poll();
+};
+</script>
+</body>
+</html>
