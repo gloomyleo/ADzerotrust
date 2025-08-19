@@ -479,21 +479,15 @@ SOFTWARE.
 
 ## 👨‍💻 About the Author
 
-**Moazzam Jafri** is a cybersecurity expert and architect with over 25 years of experience in the field. Specializing in Zero Trust architecture and Active Directory security, Moazzam has dedicated his career to helping organizations improve their security posture and achieve regulatory compliance.
+**Moazzam Jafri** — a cyber security leader with more than two decades of experience managing security programs for multinational organizations.
 
-### Professional Background
-- **25+ Years** in cybersecurity and information security
-- **Zero Trust Architecture Specialist** with extensive implementation experience
-- **Active Directory Security Expert** with deep technical knowledge
-- **Community Advocate** committed to sharing knowledge and expertise
 
 ### Mission Statement
 *"This tool represents my commitment to giving back to the cybersecurity community that has provided me with incredible opportunities throughout my career. By sharing this comprehensive assessment tool, I hope to help organizations of all sizes improve their security posture and successfully implement Zero Trust architectures."*
 
 ### Connect with Moazzam
-- **GitHub**: [github.com/moazzamjafri](https://github.com/moazzamjafri)
-- **LinkedIn**: [linkedin.com/in/moazzamjafri](https://linkedin.com/in/moazzamjafri)
-- **Email**: moazzam@adzero-trust.com
+- **LinkedIn**: [linkedin.com/in/moazzam-jafri-96136050](https://www.linkedin.com/in/moazzam-jafri-96136050/)
+
 
 ## 🙏 Acknowledgments
 
