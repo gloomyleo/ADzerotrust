@@ -1,9 +1,0 @@
-flask
-flask-restx
-prometheus_client
-pyyaml
-pandas
-reportlab
-gunicorn
-waitress
-python-dateutil
